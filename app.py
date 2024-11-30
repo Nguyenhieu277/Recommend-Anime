@@ -39,7 +39,7 @@ def generate_response(prompt):
         bot_response = ollama.chat(model = 'llama3', stream=True, messages=st.session_state.messages)
         for partial_resp in bot_response:
             token = partial_resp["message"]["content"]
-            st.session_state["full_message"] += token
+            st.session_state["messages"] += token
         yield token 
     return bot_response
 
