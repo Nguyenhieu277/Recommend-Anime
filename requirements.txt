@@ -4,3 +4,4 @@ langchain_ollama
 langchain
 streamlit
 langchain-community
+transformers
