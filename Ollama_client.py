@@ -1,7 +1,7 @@
 from langchain.llms import OpenAI
 from langchain.prompts import ChatPromptTemplate
 
-class OpenAIClient:
+class OllamaClient:
     def __init__(self, model="text-davinci-003"):
         # Initialize OpenAI model
         self.model = OpenAI(model=model)
