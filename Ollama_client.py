@@ -15,6 +15,6 @@ class OllamaClient:
         self.chain = self.model | self.prompt
 
         # Run the chain and get the result
-        result = self.chain.invoke({})
+        result = self.chain.invoke(prompt)
         return result
 
