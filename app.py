@@ -38,19 +38,21 @@ def handle_input():
 
         st.session_state.messages.append({"user" : user_input, "assistant" : response})
         st.session_state.input_text = ""
+
+st.title("💬 Anime Recommender")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     # Display the chat history
 for chat in st.session_state.messages[:-1]:
     st.markdown(f"""
     <div style="display: flex; justify-content: flex-start; color: white;">
-        <div style="background-color:rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+        <div style="background-color:rgba(0, 63, 142, 1); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
             <strong>You:</strong> {chat['user']}
         </div>
     </div>
     """, unsafe_allow_html=True)
     st.markdown(f"""
     <div style="display: flex; justify-content: flex-end; color: white;">
-        <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+        <div style="background-color: rgba(255, 63, 108, 0.4); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
             <strong>Assistant:</strong> {chat['assistant']}
         </div>
     </div>
@@ -61,7 +63,7 @@ if st.session_state.messages:
     current_chat = st.session_state.messages[-1]
     st.markdown(f"""
     <div style="display: flex; justify-content: flex-start; color: white;">
-        <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+        <div style="background-color: rgba(0, 63, 142, 1); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
             <strong>You:</strong> {current_chat['user']}
         </div>
     </div>
@@ -75,7 +77,7 @@ if st.session_state.messages:
         displayed_response += word + " "
         assistant_response.markdown(f"""
         <div style="display: flex; justify-content: flex-end; color: white;">
-            <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+            <div style="background-color: rgba(255, 63, 108, 0.4); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
                 <strong>Assistant:</strong> {displayed_response}
             </div>
         </div>
