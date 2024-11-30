@@ -1,11 +1,9 @@
 import streamlit as st
-import ollama
 from InputProcessing import InputProcessor
 from anime_list import AniList
 import time
 
 processor = InputProcessor()
-ollama.create()
 ListAnime = AniList()
 
 def isAnimeRelated(query):
