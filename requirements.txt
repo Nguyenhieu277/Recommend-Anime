@@ -1,0 +1,5 @@
+requests
+nltk
+langchain_ollama
+langchain
+streamlit
