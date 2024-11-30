@@ -5,7 +5,7 @@ class AniList:
     def __init__(self):  # Connect with AniList API
         self.api_url = "https://graphql.anilist.co"
 
-    def recommend_anime(self, genres=None, min_score=70):  # Recommend anime based on genres and score
+    def recommend_anime(self, genres=None, min_score = 40):  # Recommend anime based on genres and score
         query = """
             query($genres: [String], $minScore: Int) {
                 Page(perPage: 5) {
