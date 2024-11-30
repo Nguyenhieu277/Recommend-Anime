@@ -22,21 +22,20 @@ def generate_response(prompt):
         
         if recommendations:
             bot_response = (
-                "Here are some anime recommendations:\n\n" + 
+                "Here are some anime recommendations:\n" + 
                 "\n".join(
-                    f"- Title: {getattr(anime, 'title_english', getattr(anime, 'title_romaji', 'N/A'))}\n"
-                    f"  Description: {getattr(anime, 'description', 'No description available')}\n"
-                    f"  Genres: {', '.join(getattr(anime, 'genres', []))}\n"
-                    f"  Average Score: {getattr(anime, 'averageScore', 'N/A')}\n"
-                    f"  Episodes: {getattr(anime, 'episodes', 'N/A')}\n"
+                    f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
+                    f"  Description: {anime.get('description', 'No description available')}\n"
+                    f"  Genres: {', '.join(anime.get('genres', []))}\n"
+                    f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
+                    f"  Episodes: {anime.get('episodes', 'N/A')}\n"
                     for anime in recommendations
                 )
-
             )
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
-        bot_response = "I can't answer that question."
+        bot_response = "I can't answer that question"
     return bot_response
 
 def handle_input():
@@ -76,24 +75,19 @@ if st.session_state.messages:
     """, unsafe_allow_html=True)
 
     assistant_response = st.empty()
-    # Check if assistant's response exists
-    if current_chat['assistant']:
-        response_words = current_chat['assistant'].split()
-        displayed_response = ""
+    response_words = current_chat['assistant'].split()
+    displayed_response = ""
 
-        # Display response character by character
-        for word in response_words:
-            displayed_response += word + " "
-            assistant_response.markdown(f"""
-            <div style="display: flex; justify-content: flex-end; color: white;">
-                <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
-                    <strong>Assistant:</strong> {displayed_response}
-                </div>
+    for word in response_words:
+        displayed_response += word + " "
+        assistant_response.markdown(f"""
+        <div style="display: flex; justify-content: flex-end; color: white;">
+            <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+                <strong>Assistant:</strong> {displayed_response}
             </div>
-            """, unsafe_allow_html=True)
-            time.sleep(0.1)  # Simulate typing effect
-    else:
-        assistant_response.markdown("<div style='color: white;'>Assistant has no response yet...</div>", unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
+        time.sleep(0.1)
 
     # Input from user at the bottom of the screen
 st.text_input("You: ", key="input_text", on_change=handle_input)
