@@ -6,36 +6,29 @@ import time
 processor = InputProcessor()
 ListAnime = AniList()
 
-def isAnimeRelated(query):
-    keywords = ["recommend", "anime", "watch", "genres", "score", "hobby", "series"]
-    return any(word in query.lower() for word in keywords)
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 def generate_response(prompt):
-    if isAnimeRelated(prompt):
-        processed = processor.process_input(prompt)
-        genres = set(processed["genres"])
-        min_score = processed["min_score"]
+    processed = processor.process_input(prompt)
+    genres = set(processed["genres"])
+    min_score = processed["min_score"]
             
-        recommendations = ListAnime.recommend_anime(genres, min_score)
+    recommendations = ListAnime.recommend_anime(genres, min_score)
         
-        if recommendations:
-            bot_response = (
-                "Here are some anime recommendations:\n" + 
-                "\n".join(
-                    f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
-                    f"  Description: {anime.get('description', 'No description available')}\n"
-                    f"  Genres: {', '.join(anime.get('genres', []))}\n"
-                    f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
-                    f"  Episodes: {anime.get('episodes', 'N/A')}\n"
-                    for anime in recommendations
-                )
+    if recommendations:
+        bot_response = (
+            "Here are some anime recommendations:\n" + 
+            "\n".join(
+                f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
+                f"  Description: {anime.get('description', 'No description available')}\n"
+                f"  Genres: {', '.join(anime.get('genres', []))}\n"
+                f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
+                f"  Episodes: {anime.get('episodes', 'N/A')}\n"
+                for anime in recommendations
             )
-        else:
-            bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
+        )
     else:
-        bot_response = "I can't answer that question"
+        bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     return bot_response
 
 def handle_input():
