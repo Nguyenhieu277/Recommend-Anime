@@ -4,14 +4,8 @@ from InputProcessing import InputProcessor
 from anime_list import AniList
 import time
 
-modelfile = '''
-    FROM llama3
-    SYSTEM """
-    You are a smart assistant , can explain everything about anime and world.
-    """
-'''
 processor = InputProcessor()
-ollama.create(model="llama3", modelfile=modelfile)
+ollama.create()
 ListAnime = AniList()
 
 def isAnimeRelated(query):
@@ -43,7 +37,7 @@ def generate_response(prompt):
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
-        bot_response = (ollama.generate(model="llama3",prompt=prompt))['response']
+        bot_response = "I can't answer that question."
     return bot_response
 
 def handle_input():
