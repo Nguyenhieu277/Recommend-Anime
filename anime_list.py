@@ -26,7 +26,7 @@ class AniList:
         # If no genres are provided, use a default set (e.g., "Action", "Adventure")
         genres = genres or ["Action", "Adventure", "Comedy", "Romance"]
 
-        variables = {"genres": genres, "minScore": min_score}
+        variables = {"genres": list(genres), "minScore": min_score}
         response = requests.post(self.api_url, json={"query": query, "variables": variables})
         
         if response.status_code == 200:
