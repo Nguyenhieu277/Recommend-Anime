@@ -38,7 +38,7 @@ Run the app with streamlit:
 streamlit run app.py
 ```
 Input a query in natural language to get anime recommendations.
-
+You can also try in here https://mini-project-27072005.streamlit.app/#ea704c50
 ## Contributing
 Contributions are welcome! To contribute:
 
