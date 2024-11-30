@@ -25,6 +25,7 @@ def generate_response(prompt):
         f"  Genres: {', '.join(anime.get('genres', []))}\n\n"
         f"  Average Score: {anime.get('averageScore', 'N/A')}\n\n"
         f"  Episodes: {anime.get('episodes', 'N/A')}\n\n"
+        "\n"
         if isinstance(anime, dict)
         else "don't have anime based on your discription"
         for anime in recommendations
