@@ -78,20 +78,26 @@ if st.session_state.messages:
     </div>
     """, unsafe_allow_html=True)
 
-    assistant_response = st.empty()
-    response_words = current_chat['assistant'].split()
+    assistant_response = st.empty()  # Empty placeholder for streaming effect
     displayed_response = ""
 
-    for word in response_words:
-        displayed_response += word + " "
-        assistant_response.markdown(f"""
-        <div style="display: flex; justify-content: flex-end; color: white;">
-            <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
-                <strong>Assistant:</strong> {displayed_response}
+    # Check if the assistant has generated a valid response
+    if current_chat.get('assistant'):
+        response_words = current_chat['assistant'].split()
+        for word in response_words:
+            displayed_response += word + " "
+            assistant_response.markdown(f"""
+            <div style="display: flex; justify-content: flex-end; color: white;">
+                <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+                    <strong>Assistant:</strong> {displayed_response}
+                </div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-        time.sleep(0.1)
+            """, unsafe_allow_html=True)
+            time.sleep(0.1)
+    else:
+        # In case there's no assistant response yet, display a default placeholder
+        assistant_response.markdown("<div style='color: white;'>Assistant is typing...</div>", unsafe_allow_html=True)
+
 
     # Input from user at the bottom of the screen
 st.text_input("You: ", key="input_text", on_change=handle_input)
