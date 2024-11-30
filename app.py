@@ -19,7 +19,7 @@ def generate_response(prompt):
         bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
 
     # Safeguard and generate response
-    bot_response = "\n".join(
+    bot_response = "\n\n".join(
         f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n\n"
         f"  Description: {anime.get('description', 'No description available')}\n\n"
         f"  Genres: {', '.join(anime.get('genres', []))}\n\n"
