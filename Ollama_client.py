@@ -9,7 +9,12 @@ class OllamaClient:
     def generate_text(self, prompt):
         
         # Create a chat prompt template
-        prompt_template = ChatPromptTemplate.from_template("{user_input}")
-        result = self.model.invoke(prompt_template.format(user_input=prompt))
+        # self.prompt = ChatPromptTemplate.from_template(prompt)
+
+        # # Combine the prompt with the model
+        # self.chain = self.model | self.prompt
+
+        # Run the chain and get the result
+        result = self.model.invoke(prompt)
         return result
 
