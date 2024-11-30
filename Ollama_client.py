@@ -17,3 +17,4 @@ class OllamaClient:
         # Run the chain and get the result
         result = self.chain.invoke({})
         return result
+

@@ -10,8 +10,18 @@ class InputProcessor:
         self.stop_words = set(stopwords.words("english"))
         self.genres_list = [
             "action", "adventure", "comedy", "drama", "fantasy",
-            "horror", "romance", "sci-fi", "slice of life", "sports", "supernatural"
+            "horror", "romance", "sci-fi", "slice of life", "sports", "supernatural", "game", "gourmet", "music",
+            "mecha"
         ]  
+        self.hobby_map = {
+            "sports": ["sports"], 
+            "music": ["music"],
+            "cooking": ["gourmet", "slice of life"],
+            "gaming": ["game", "sci-fi", "action", "adventure"],
+            "reading": ["mystery", "fantasy"],
+            "technology": ["sci-fi", "mecha"],
+            "dancing": ["music"],
+        }
 
     def process_input(self, user_input):
 
@@ -21,6 +31,12 @@ class InputProcessor:
     
         genres = [word for word in filtered_words if word in self.genres_list]
 
+        hobbies = [word for word in filtered_words if word in self.hobby_map]
+
+        for hobby in hobbies:
+            genres.extend(self.hobby_map[hobby])
+
+        genres = list(dict.fromkeys(genres))
         min_score = 70
         words_with_numbers = word_tokenize(user_input.lower())
         for i, word in enumerate(words_with_numbers):
@@ -41,22 +57,20 @@ class InputProcessor:
         }
 
 # if __name__ == '__main__':
-#     # Create an instance of InputProcessor
 #     processor = InputProcessor()
-
-#     # Test cases
-#     test_inputs = [
+#     test_cases = [
 #         "I love action and fantasy anime with at least a score of 80.",
 #         "Can you recommend some romance or drama anime? Minimum score: 90.",
 #         "Looking for sci-fi and supernatural anime, maybe something above 75.",
 #         "I'm into sports and adventure shows. Surprise me!",
-#         "What are some good comedy anime? Anything works, score doesn't matter."
+#         "What are some good comedy anime? Anything works, score doesn't matter.",
+#         "I enjoy cooking and gaming. Recommend something fun!",
+#         "I'm a fan of music and dancing. Any suggestions?"
 #     ]
 
-#     # Process each test input
-#     for idx, input_text in enumerate(test_inputs, start=1):
-#         print(f"Test Case {idx}:")
-#         result = processor.process_input(input_text)
+#     for idx, input_text in enumerate(test_cases):
+#         print(f"Test Case {idx + 1}:")
 #         print(f"Input: {input_text}")
-#         print(f"Processed Result: {result}")
+#         result = processor.process_input(input_text)
+#         print("Processed Result:", result)
 #         print("-" * 40)
