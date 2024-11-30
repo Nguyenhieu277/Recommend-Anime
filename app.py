@@ -32,7 +32,7 @@ def generate_response(prompt):
     return bot_response
 
 def handle_input():
-    user_input = st.session_state.input_text("Enter about genres, scores and your hobbies here ")
+    user_input = st.session_state.input_text
     if user_input:
         response = generate_response(user_input)
 
