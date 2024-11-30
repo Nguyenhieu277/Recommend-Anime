@@ -4,8 +4,14 @@ from InputProcessing import InputProcessor
 from anime_list import AniList
 import time
 
+modelfile = '''
+    FROM llama3
+    SYSTEM """
+    You are a smart assistant , can explain everything about anime and world.
+    """
+'''
 processor = InputProcessor()
-
+ollama.create(model="llama3", modelfile=modelfile)
 ListAnime = AniList()
 
 def isAnimeRelated(query):
@@ -37,22 +43,7 @@ def generate_response(prompt):
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
-        
-        response_stream = ollama.chat(model='llama3', stream=True, messages=st.session_state.messages)
-        bot_response = ""
-        for chunk in response_stream:
-            bot_response += chunk['text']  # Assuming the response is in 'text' field
-            st.session_state.messages.append({"user": "", "assistant": bot_response})  # Add streamed response to messages
-            # Render streamed response in real-time
-            assistant_response.markdown(f"""
-            <div style="display: flex; justify-content: flex-end; color: white;">
-                <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
-                    <strong>Assistant:</strong> {bot_response}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            time.sleep(0.1)  # Small delay to simulate real-time typing
-
+        bot_response = (ollama.generate(model="llama3",prompt=prompt))['response']
     return bot_response
 
 def handle_input():
