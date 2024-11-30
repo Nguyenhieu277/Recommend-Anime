@@ -1,10 +1,10 @@
-from langchain.llms import OpenAI
+from langchain.llms import HuggingFaceLLM
 from langchain.prompts import ChatPromptTemplate
 
 class OllamaClient:
-    def __init__(self, model="text-davinci-003"):
-        # Initialize OpenAI model
-        self.model = OpenAI(model=model)
+    def __init__(self, model="gpt2"):
+        # Initialize HuggingFace model
+        self.model = HuggingFaceLLM(model=model)
 
     def generate_text(self, prompt):
         # Create a chat prompt template
