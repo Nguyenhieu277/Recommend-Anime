@@ -37,7 +37,13 @@ def generate_response(prompt):
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
-        bot_response = Ollama.generate_text(prompt)
+        if isinstance(prompt, str) and prompt.strip():  # Ensure the prompt is a non-empty string
+            try:
+                bot_response = Ollama.generate_text(prompt)
+            except ValueError as e:
+                bot_response = f"Error generating response: {str(e)}"
+        else:
+            bot_response = "Sorry, I couldn't process that input. Please try again."
     return bot_response
 
 def handle_input():
