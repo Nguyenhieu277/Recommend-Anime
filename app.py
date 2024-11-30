@@ -5,6 +5,7 @@ from anime_list import AniList
 import time
 
 processor = InputProcessor()
+
 ListAnime = AniList()
 
 def isAnimeRelated(query):
@@ -37,10 +38,7 @@ def generate_response(prompt):
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
         bot_response = ollama.chat(model = 'llama3', stream=True, messages=st.session_state.messages)
-        for partial_resp in bot_response:
-            token = partial_resp["message"]["content"]
-            st.session_state["messages"] += token
-        yield token 
+    return bot_response
 
 def handle_input():
     user_input = st.session_state.input_text
