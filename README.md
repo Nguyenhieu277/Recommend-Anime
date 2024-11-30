@@ -9,7 +9,7 @@ The "Recommend Anime" project is a recommendation system designed to help users 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install packages.
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 ## Features
 - Natural Language Input: Accepts plain English queries (e.g., "I want romance and action anime with a score above 90").
