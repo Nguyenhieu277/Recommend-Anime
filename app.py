@@ -23,7 +23,17 @@ def generate_response(prompt):
         recommendations = ListAnime.recommend_anime(genres, min_score)
         
         if recommendations:
-            bot_response = "Here are some anime recommendations:\n" + "\n".join(f"- {anime}" for anime in recommendations)
+            bot_response = (
+                "Here are some anime recommendations:\n" + 
+                "\n".join(
+                    f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
+                    f"  Description: {anime.get('description', 'No description available')}\n"
+                    f"  Genres: {', '.join(anime.get('genres', []))}\n"
+                    f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
+                    f"  Episodes: {anime.get('episodes', 'N/A')}\n"
+                    for anime in recommendations
+                )
+            )
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
