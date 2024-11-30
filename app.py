@@ -20,6 +20,7 @@ def generate_response(prompt):
 
     # Safeguard and generate response
     bot_response = "\n\n".join(
+        "\n"
         f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n\n"
         f"  Description: {anime.get('description', 'No description available')}\n\n"
         f"  Genres: {', '.join(anime.get('genres', []))}\n\n"
