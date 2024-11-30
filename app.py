@@ -13,7 +13,7 @@ def isAnimeRelated(query):
     return any(word in query.lower() for word in keywords)
 
 if "messages" not in st.session_state:
-    st.session_state.message = []
+    st.session_state.messages = []
 def generate_response(prompt):
     if isAnimeRelated(prompt):
         processed = processor.process_input(prompt)
@@ -35,7 +35,7 @@ def handle_input():
     if user_input:
         response = generate_response(user_input)
 
-        st.session_state.message.append({"user" : user_input, "content" : response})
+        st.session_state.messages.append({"user" : user_input, "content" : response})
         st.session_state.input_text = ""
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     # Display the chat history
