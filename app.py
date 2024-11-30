@@ -1,11 +1,10 @@
 import streamlit as st
-from Ollama_client import OllamaClient
+import ollama
 from InputProcessing import InputProcessor
 from anime_list import AniList
 import time
 
 processor = InputProcessor()
-Ollama = OllamaClient("llama3")
 ListAnime = AniList()
 
 def isAnimeRelated(query):
@@ -37,7 +36,11 @@ def generate_response(prompt):
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
     else:
-        bot_response = Ollama.generate_text(prompt)
+        bot_response = ollama.chat(model = 'llama3', stream=True, messages=st.session_state.messages)
+        for partial_resp in bot_response:
+            token = partial_resp["message"]["content"]
+            st.session_state["full_message"] += token
+        yield token 
     return bot_response
 
 def handle_input():
