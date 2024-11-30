@@ -24,7 +24,7 @@ def generate_response(prompt):
         
         if recommendations:
             bot_response = (
-                "Here are some anime recommendations:\n" + 
+                "Here are some anime recommendations:\n\n" + 
                 "\n".join(
                     f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
                     f"  Description: {anime.get('description', 'No description available')}\n"
@@ -77,19 +77,24 @@ if st.session_state.messages:
     """, unsafe_allow_html=True)
 
     assistant_response = st.empty()
-    response_words = current_chat['assistant'].split()
-    displayed_response = ""
+    # Check if assistant's response exists
+    if current_chat['assistant']:
+        response_words = current_chat['assistant'].split()
+        displayed_response = ""
 
-    for word in response_words:
-        displayed_response += word + " "
-        assistant_response.markdown(f"""
-        <div style="display: flex; justify-content: flex-end; color: white;">
-            <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
-                <strong>Assistant:</strong> {displayed_response}
+        # Display response character by character
+        for word in response_words:
+            displayed_response += word + " "
+            assistant_response.markdown(f"""
+            <div style="display: flex; justify-content: flex-end; color: white;">
+                <div style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 10px; margin: 5px 0; max-width: 70%;">
+                    <strong>Assistant:</strong> {displayed_response}
+                </div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-        time.sleep(0.1)
+            """, unsafe_allow_html=True)
+            time.sleep(0.1)  # Simulate typing effect
+    else:
+        assistant_response.markdown("<div style='color: white;'>Assistant has no response yet...</div>", unsafe_allow_html=True)
 
     # Input from user at the bottom of the screen
 st.text_input("You: ", key="input_text", on_change=handle_input)
