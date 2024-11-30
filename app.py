@@ -13,7 +13,7 @@ def isAnimeRelated(query):
     return any(word in query.lower() for word in keywords)
 
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.message = []
 def generate_response(prompt):
     if isAnimeRelated(prompt):
         processed = processor.process_input(prompt)
