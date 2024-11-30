@@ -20,11 +20,11 @@ def generate_response(prompt):
 
     # Safeguard and generate response
     bot_response = "\n".join(
-        f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
-        f"  Description: {anime.get('description', 'No description available')}\n"
-        f"  Genres: {', '.join(anime.get('genres', []))}\n"
-        f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
-        f"  Episodes: {anime.get('episodes', 'N/A')}\n"
+        f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n\n"
+        f"  Description: {anime.get('description', 'No description available')}\n\n"
+        f"  Genres: {', '.join(anime.get('genres', []))}\n\n"
+        f"  Average Score: {anime.get('averageScore', 'N/A')}\n\n"
+        f"  Episodes: {anime.get('episodes', 'N/A')}\n\n"
         if isinstance(anime, dict)
         else "don't have anime based on your discription"
         for anime in recommendations
