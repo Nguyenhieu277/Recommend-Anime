@@ -35,7 +35,7 @@ def handle_input():
     if user_input:
         response = generate_response(user_input)
 
-        st.session_state.messages.append({"user" : user_input, "content" : response})
+        st.session_state.messages.append({"user" : user_input, "assistant" : response})
         st.session_state.input_text = ""
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     # Display the chat history
