@@ -52,8 +52,7 @@ class AniList:
             return results
         else:
             return {
-                "message": "No recommendations found based on your preferences.",
-                "suggestions": "Try adjusting your genre or score preferences."
+                "Don't have any anime based on discription"
             }
 
 
