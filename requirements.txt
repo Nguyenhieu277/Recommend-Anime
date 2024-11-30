@@ -3,3 +3,4 @@ nltk
 langchain_ollama
 langchain
 streamlit
+langchain-community
