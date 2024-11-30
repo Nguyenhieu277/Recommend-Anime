@@ -41,7 +41,6 @@ def generate_response(prompt):
             token = partial_resp["message"]["content"]
             st.session_state["messages"] += token
         yield token 
-    return bot_response
 
 def handle_input():
     user_input = st.session_state.input_text
