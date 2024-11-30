@@ -24,13 +24,14 @@ def generate_response(prompt):
             bot_response = (
                 "Here are some anime recommendations:\n\n" + 
                 "\n".join(
-                    f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n"
-                    f"  Description: {anime.get('description', 'No description available')}\n"
-                    f"  Genres: {', '.join(anime.get('genres', []))}\n"
-                    f"  Average Score: {anime.get('averageScore', 'N/A')}\n"
-                    f"  Episodes: {anime.get('episodes', 'N/A')}\n"
+                    f"- Title: {getattr(anime, 'title_english', getattr(anime, 'title_romaji', 'N/A'))}\n"
+                    f"  Description: {getattr(anime, 'description', 'No description available')}\n"
+                    f"  Genres: {', '.join(getattr(anime, 'genres', []))}\n"
+                    f"  Average Score: {getattr(anime, 'averageScore', 'N/A')}\n"
+                    f"  Episodes: {getattr(anime, 'episodes', 'N/A')}\n"
                     for anime in recommendations
                 )
+
             )
         else:
             bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
