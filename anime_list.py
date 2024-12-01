@@ -40,6 +40,7 @@ class AniList:
         if media_list:
             results = []
             for media in media_list:
+                if len(results) == 2: break
                 results.append({
                     "id": media.get("id"),
                     "title_romaji": media.get("title", {}).get("romaji"),
@@ -51,9 +52,7 @@ class AniList:
                 })
             return results
         else:
-            return {
-                "Don't have any anime based on discription"
-            }
+            return 0
 
 
 # if __name__ == "__main__":

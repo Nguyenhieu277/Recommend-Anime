@@ -44,7 +44,7 @@ class InputProcessor:
                 score = int(word)
                 if 0 <= score <= 100:
                     min_score = score
-            elif word in ["above", "minimum", "at", "least"] and i + 1 < len(words_with_numbers):
+            elif word in ["above", "minimum", "at", "least", "with"] and i + 1 < len(words_with_numbers):
                 if words_with_numbers[i + 1].isdigit():
                     score = int(words_with_numbers[i + 1])
                     if 0 <= score <= 100:

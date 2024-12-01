@@ -1,9 +1,11 @@
 import streamlit as st
 from InputProcessing import InputProcessor
 from anime_list import AniList
+from openAI import OpenAIClient
 import time
 
 processor = InputProcessor()
+client = OpenAIClient()
 ListAnime = AniList()
 
 if "messages" not in st.session_state:
@@ -14,10 +16,19 @@ def generate_response(prompt):
     min_score = processed["min_score"]
             
     recommendations = ListAnime.recommend_anime(genres, min_score)
-        
-    if not recommendations:
-        bot_response = "I couldn't find any anime matching your criteria. Try being more specific!"
-
+       
+    if recommendations == 0:
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant to recommend anime",
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+        bot_response = client.get_response(messages)
     # Safeguard and generate response
     bot_response = "\n\n".join(
         "\n"
