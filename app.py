@@ -93,6 +93,10 @@ def handle_input():
         
         st.session_state.messages.append({"user": user_input, "assistant": response})
         st.session_state.input_text = ""
+    else: 
+        response = "I can't answer that question."
+        st.session_state.messages.append({"user": user_input, "assistant": response})
+        st.session_state.input_text = ""
 
 st.title("💬 Anime Recommender")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
