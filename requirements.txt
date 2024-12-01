@@ -2,3 +2,4 @@ requests
 nltk
 streamlit
 openai
+python-dotenv
