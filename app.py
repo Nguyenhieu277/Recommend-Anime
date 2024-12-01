@@ -7,7 +7,9 @@ import time
 processor = InputProcessor()
 client = OpenAIClient()
 ListAnime = AniList()
-
+def isRelatedAnime(query):
+    keywords = ["recommend","suggest","good","best","popular","top","watch","series","movie","anime","genre","list","favorites"]
+    return any(keyword in query.lower() for keyword in keywords)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 def generate_response(prompt):
@@ -18,17 +20,7 @@ def generate_response(prompt):
     recommendations = ListAnime.recommend_anime(genres, min_score)
        
     if not recommendations:
-        messages = [
-            {
-                "role": "assistant",
-                "content": "You are a helpful assistant",
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-        bot_response = client.get_response(messages)
+        bot_response = "<p>Don't have any anime based on your description</p>"
     else:
     # Safeguard and generate response
         bot_response = "".join(
@@ -43,15 +35,20 @@ def generate_response(prompt):
             else "<p>Don't have anime based on your description</p>"
             for anime in recommendations
         )
+    
     return bot_response
 
 def handle_input():
     user_input = st.session_state.input_text
-    if user_input:
-        response = generate_response(user_input)
+    if isRelatedAnime(user_input):
+        if user_input:
+            response = generate_response(user_input)
 
+            st.session_state.messages.append({"user" : user_input, "assistant" : response})
+    else:
+        response = client.get_response(user_input)
         st.session_state.messages.append({"user" : user_input, "assistant" : response})
-        st.session_state.input_text = ""
+    st.session_state.input_text = ""
 
 st.title("💬 Anime Recommender")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)

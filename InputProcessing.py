@@ -9,19 +9,48 @@ class InputProcessor:
         
         self.stop_words = set(stopwords.words("english"))
         self.genres_list = [
-            "action", "adventure", "comedy", "drama", "fantasy",
-            "horror", "romance", "sci-fi", "slice of life", "sports", "supernatural", "game", "gourmet", "music",
-            "mecha"
-        ]  
+            "action", "adventure", "comedy", "drama", "fantasy", "horror", "romance", 
+            "sci-fi", "slice of life", "sports", "supernatural", "game", "gourmet", 
+            "music", "mecha", "psychological", "mystery", "thriller", "historical", 
+            "military", "martial arts", "ecchi", "harem", "reverse harem", "shoujo", 
+            "shounen", "seinen", "josei", "cyberpunk", "post-apocalyptic", "magic", 
+            "parody", "school", "survival", "tragedy", "demons", "kids", 
+            "romantic comedy", "superpower", "dark fantasy", "isekai", "crime", 
+            "idols", "vampire", "zombie", "steampunk", "detective", "medical", 
+            "battle royale", "space", "time travel", "dystopian", "anthropomorphic", 
+            "mythology", "yaoi", "yuri", "otokonoko", "alchemy", "political", 
+            "family", "nature", "healing", "reverse isekai"
+        ]
+ 
         self.hobby_map = {
-            "sports": ["sports"], 
-            "music": ["music"],
-            "cooking": ["gourmet", "slice of life"],
-            "gaming": ["game", "sci-fi", "action", "adventure"],
-            "reading": ["mystery", "fantasy"],
-            "technology": ["sci-fi", "mecha"],
-            "dancing": ["music"],
+            "sports": ["sports", "action", "adventure"],
+            "music": ["music", "slice of life", "romantic comedy"],
+            "cooking": ["gourmet", "slice of life", "comedy"],
+            "gaming": ["game", "sci-fi", "action", "adventure", "fantasy"],
+            "reading": ["mystery", "fantasy", "historical", "psychological", "thriller"],
+            "technology": ["sci-fi", "mecha", "cyberpunk", "post-apocalyptic"],
+            "dancing": ["music", "slice of life"],
+            "traveling": ["adventure", "historical", "fantasy", "sci-fi"],
+            "art": ["romance", "slice of life", "historical", "parody"],
+            "fitness": ["sports", "action", "survival"],
+            "nature": ["nature", "healing", "fantasy"],
+            "photography": ["slice of life", "nature", "historical"],
+            "studying": ["school", "psychological", "mystery"],
+            "movies": ["drama", "romantic comedy", "thriller", "action"],
+            "coding": ["sci-fi", "cyberpunk", "mecha", "magic"],
+            "volunteering": ["family", "slice of life", "healing"],
+            "meditation": ["healing", "slice of life", "nature"],
+            "writing": ["tragedy", "drama", "fantasy", "psychological"],
+            "socializing": ["romantic comedy", "slice of life", "comedy"],
+            "collecting": ["historical", "fantasy", "mystery"],
+            "adventuring": ["adventure", "survival", "action", "post-apocalyptic"],
+            "fashion": ["romance", "slice of life", "comedy"],
+            "gardening": ["nature", "healing", "slice of life"],
+            "anime": ["romantic comedy", "action", "sci-fi", "fantasy"],
+            "astronomy": ["sci-fi", "space", "fantasy"],
+            "martial arts": ["martial arts", "action", "sports", "mecha"]
         }
+
 
     def process_input(self, user_input):
 
@@ -31,7 +60,7 @@ class InputProcessor:
     
         genres = [word for word in filtered_words if word in self.genres_list]
 
-        hobbies = [word for word in filtered_words if word in self.hobby_map]
+        hobbies = [word for word in words if word in self.hobby_map]
 
         for hobby in hobbies:
             genres.extend(self.hobby_map[hobby])
@@ -59,7 +88,7 @@ class InputProcessor:
 # if __name__ == '__main__':
 #     processor = InputProcessor()
 #     test_cases = [
-#         "I want to romance anime with at least 80 score",
+#         "I love watching anime with at least 80 score",
 #         "Can you recommend some romance or drama anime? Minimum score: 90.",
 #         "Looking for sci-fi and supernatural anime, maybe something above 75.",
 #         "I'm into sports and adventure shows. Surprise me!",
