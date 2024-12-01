@@ -1,6 +1,4 @@
 import requests
-
-
 class AniList:
     def __init__(self):  # Connect with AniList API
         self.api_url = "https://graphql.anilist.co"
