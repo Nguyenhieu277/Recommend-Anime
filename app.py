@@ -81,6 +81,8 @@ def handle_input():
             response = generate_response(user_input)
 
             st.session_state.messages.append({"user" : user_input, "assistant" : response})
+            st.session_state.input_text = ""
+
     elif isGreetings(user_input):
         # Check for the greeting and return a random response
         greeting = next((greeting for greeting in greeting_responses if greeting in user_input.lower()), None)
@@ -90,7 +92,7 @@ def handle_input():
             response = "Hello! How can I assist you today?"
         
         st.session_state.messages.append({"user": user_input, "assistant": response})
-    st.session_state.input_text = ""
+        st.session_state.input_text = ""
 
 st.title("💬 Anime Recommender")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
