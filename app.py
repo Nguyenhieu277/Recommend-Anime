@@ -30,16 +30,16 @@ def generate_response(prompt):
         ]
         bot_response = client.get_response(messages)
     # Safeguard and generate response
-    bot_response = "\n\n".join(
-        "\n"
-        f"- Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}\n\n"
-        f"  Description: {anime.get('description', 'No description available')}\n\n"
-        f"  Genres: {', '.join(anime.get('genres', []))}\n\n"
-        f"  Average Score: {anime.get('averageScore', 'N/A')}\n\n"
-        f"  Episodes: {anime.get('episodes', 'N/A')}\n\n"
-        "\n"
+    bot_response = "".join(
+        f"<div>"
+        f"<h2>Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}</h2>"
+        f"<p><strong>Description:</strong> {anime.get('description', 'No description available')}</p>"
+        f"<p><strong>Genres:</strong> {', '.join(anime.get('genres', []))}</p>"
+        f"<p><strong>Average Score:</strong> {anime.get('averageScore', 'N/A')}</p>"
+        f"<p><strong>Episodes:</strong> {anime.get('episodes', 'N/A')}</p>"
+        f"</div><br>"
         if isinstance(anime, dict)
-        else "don't have anime based on your discription"
+        else "<p>Don't have anime based on your description</p>"
         for anime in recommendations
     )
     return bot_response
