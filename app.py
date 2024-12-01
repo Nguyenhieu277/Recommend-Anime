@@ -20,7 +20,7 @@ def generate_response(prompt):
     if recommendations == 0:
         messages = [
             {
-                "role": "system",
+                "role": "assistant",
                 "content": "You are a helpful assistant to recommend anime",
             },
             {
