@@ -32,14 +32,13 @@ class AniList:
             media_list = data.get("data", {}).get("Page", {}).get("media", [])
             return self._process_anime_data(media_list)
         else:
-            return {"error": f"API error: {response.status_code}"}
+            return []
 
     def _process_anime_data(self, media_list):  # Process anime data
-        if media_list:
-            results = []
-            for media in media_list:
-                if len(results) == 2: break
-                results.append({
+        results = []
+        for media in media_list:
+            if len(results) == 2: break
+            results.append({
                     "id": media.get("id"),
                     "title_romaji": media.get("title", {}).get("romaji"),
                     "title_english": media.get("title", {}).get("english"),
@@ -47,10 +46,8 @@ class AniList:
                     "genres": media.get("genres"),
                     "averageScore": media.get("averageScore"),
                     "episodes": media.get("episodes")
-                })
-            return results
-        else:
-            return 0
+            })
+        return results
 
 
 # if __name__ == "__main__":

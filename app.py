@@ -21,7 +21,7 @@ def generate_response(prompt):
         messages = [
             {
                 "role": "assistant",
-                "content": "You are a helpful assistant to recommend anime",
+                "content": "You are a helpful assistant",
             },
             {
                 "role": "user",
@@ -29,19 +29,20 @@ def generate_response(prompt):
             }
         ]
         bot_response = client.get_response(messages)
+    else:
     # Safeguard and generate response
-    bot_response = "".join(
-        f"<div>"
-        f"<h2>Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}</h2>"
-        f"<p><strong>Description:</strong> {anime.get('description', 'No description available')}</p>"
-        f"<p><strong>Genres:</strong> {', '.join(anime.get('genres', []))}</p>"
-        f"<p><strong>Average Score:</strong> {anime.get('averageScore', 'N/A')}</p>"
-        f"<p><strong>Episodes:</strong> {anime.get('episodes', 'N/A')}</p>"
-        f"</div><br>"
-        if isinstance(anime, dict)
-        else "<p>Don't have anime based on your description</p>"
-        for anime in recommendations
-    )
+        bot_response = "".join(
+            f"<div>"
+            f"<h2>Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}</h2>"
+            f"<p><strong>Description:</strong> {anime.get('description', 'No description available')}</p>"
+            f"<p><strong>Genres:</strong> {', '.join(anime.get('genres', []))}</p>"
+            f"<p><strong>Average Score:</strong> {anime.get('averageScore', 'N/A')}</p>"
+            f"<p><strong>Episodes:</strong> {anime.get('episodes', 'N/A')}</p>"
+            f"</div><br>"
+            if isinstance(anime, dict)
+            else "<p>Don't have anime based on your description</p>"
+            for anime in recommendations
+        )
     return bot_response
 
 def handle_input():
