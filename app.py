@@ -17,7 +17,7 @@ def generate_response(prompt):
             
     recommendations = ListAnime.recommend_anime(genres, min_score)
        
-    if recommendations == 0:
+    if not recommendations:
         messages = [
             {
                 "role": "assistant",
