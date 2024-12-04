@@ -1,6 +1,7 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 nltk.download('punkt_tab')
 nltk.download('stopwords')
 
@@ -46,11 +47,10 @@ class InputProcessor:
             "adventuring": ["adventure", "survival", "action", "post-apocalyptic"],
             "fashion": ["romance", "slice of life", "comedy"],
             "gardening": ["nature", "healing", "slice of life"],
-            "anime": ["romantic comedy", "action", "sci-fi", "fantasy"],
             "astronomy": ["sci-fi", "space", "fantasy"],
             "martial arts": ["martial arts", "action", "sports", "mecha"]
         }
-
+        self.stemmer = PorterStemmer()
 
     def process_input(self, user_input):
 
@@ -66,7 +66,7 @@ class InputProcessor:
             genres.extend(self.hobby_map[hobby])
 
         genres = list(dict.fromkeys(genres))
-        min_score = 70
+        min_score = 50
         words_with_numbers = word_tokenize(user_input.lower())
         for i, word in enumerate(words_with_numbers):
             if word.isdigit():
@@ -88,7 +88,7 @@ class InputProcessor:
 # if __name__ == '__main__':
 #     processor = InputProcessor()
 #     test_cases = [
-#         "I love watching anime with at least 80 score",
+#         "I love watching zombie anime",
 #         "Can you recommend some romance or drama anime? Minimum score: 90.",
 #         "Looking for sci-fi and supernatural anime, maybe something above 75.",
 #         "I'm into sports and adventure shows. Surprise me!",

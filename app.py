@@ -90,7 +90,7 @@ def generate_response(prompt):
     recommendations = ListAnime.recommend_anime(genres, min_score)
        
     if not recommendations:
-        bot_response = "<p>Don't have any anime based on your description</p>"
+        return 0
     else:
     # Safeguard and generate response
         bot_response = "".join(
@@ -113,9 +113,20 @@ def handle_input():
     if isRelatedAnime(user_input):
         if user_input:
             response = generate_response(user_input)
-
+            if response == 0:
+                response = client.get_response([
+                    {
+                        "role": "system",
+                        "content": "You are a helpful assistant to recommend some good anime",
+                    },
+                    {
+                        "role": "user",
+                        "content": user_input,
+                    }
+                ])
             st.session_state.messages.append({"user" : user_input, "assistant" : response})
             st.session_state.input_text = ""
+        
 
     elif isGreetings(user_input):
         # Check for the greeting and return a random response
