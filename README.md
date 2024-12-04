@@ -24,6 +24,7 @@ pip install -r requirements.txt
 - Using AniList databases
 - nltk (Natural Language Toolkit)
 - streamlit (for user interface, if applicable)
+- openAI Azure API
 ## Usage
 Running the Application
 Clone the repository:
