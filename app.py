@@ -10,36 +10,29 @@ from openai import OpenAI, OpenAIError
 load_dotenv()
 api_key = st.secrets["GITHUB_TOKEN"]
 class OpenAIClient:
-    def __init__(self, endpoint, token, model_name, retries=3, delay=2):
-        self.endpoint = endpoint
-        self.token = token
-        self.model_name = model_name
-        self.retries = retries
-        self.delay = delay
-        self.client = None
-        self.initialize_client()
+    def __init__(self):
+        load_dotenv()
+        self.token = api_key
+        self.endpoint = "https://models.inference.ai.azure.com"
+        self.model_name = "gpt-4o-mini"
+        try:
+            self.client = OpenAI(
+                base_url=self.endpoint,
+                api_key=self.token,
+            )
+        except OpenAIError as e:
+            print(f"Failed to initialize OpenAI client: {e}")
+            self.client = None
 
-    def initialize_client(self):
-        for attempt in range(self.retries):
-            try:
-                self.client = OpenAI(
-                    base_url=self.endpoint,
-                    api_key=self.token,
-                )
-                print("OpenAI client initialized successfully.")
-                return
-            except OpenAIError as e:
-                print(f"Failed to initialize OpenAI client (attempt {attempt + 1}/{self.retries}): {e}")
-                time.sleep(self.delay)
-        print("Failed to initialize OpenAI client after multiple attempts.")
-        self.client = None
-
-    def get_response(self, messages):
+    def get_response(self, messages, temperature=1.0, top_p=1.0, max_tokens=1000):
         if not self.client:
             return "OpenAI client is not initialized."
         try:
             response = self.client.chat.completions.create(
                 messages=messages,
+                temperature=temperature,
+                top_p=top_p,
+                max_tokens=max_tokens,
                 model=self.model_name
             )
             return response.choices[0].message.content
@@ -47,7 +40,7 @@ class OpenAIClient:
             return f"Failed to get response from OpenAI: {e}"
 
 processor = InputProcessor()
-client = OpenAIClient(endpoint="https://models.inference.ai.azure.com", token=api_key, model_name="gpt-4o-mini")
+client = OpenAIClient()
 ListAnime = AniList()
 greeting_responses = {
     "hello": ["Hello! How can I assist you today?", "Hi there! How can I help you?", "Hello! What can I do for you today?"],
