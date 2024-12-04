@@ -84,10 +84,11 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 def generate_response(prompt):
     processed = processor.process_input(prompt)
+    tags = set(processed["tags"])
     genres = set(processed["genres"])
     min_score = processed["min_score"]
             
-    recommendations = ListAnime.recommend_anime(genres, min_score)
+    recommendations = ListAnime.recommend_anime(tags, genres, min_score)
        
     if not recommendations:
         return 0
