@@ -11,7 +11,7 @@ api_key = st.secrets["GITHUB_TOKEN"]
 class OpenAIClient:
     def __init__(self):
         load_dotenv()
-        self.token = os.getenv("GITHUB_TOKEN")
+        self.token = api_key
         self.endpoint = "https://models.inference.ai.azure.com"
         self.model_name = "gpt-4o-mini"
         try:
