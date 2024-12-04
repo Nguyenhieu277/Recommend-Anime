@@ -11,7 +11,6 @@ load_dotenv()
 api_key = st.secrets["GITHUB_TOKEN"]
 class OpenAIClient:
     def __init__(self):
-        load_dotenv()
         self.token = api_key
         self.endpoint = "https://models.inference.ai.azure.com"
         self.model_name = "gpt-4o-mini"
@@ -35,7 +34,8 @@ class OpenAIClient:
                 max_tokens=max_tokens,
                 model=self.model_name
             )
-            return response.choices[0].message.content
+            html_response = f"<p>{response.choices[0].message.content}</p>"
+            return html_response
         except OpenAIError as e:
             return f"Failed to get response from OpenAI: {e}"
 
@@ -142,6 +142,7 @@ def handle_input():
         st.session_state.input_text = ""
 
 st.title("💬 Anime Recommender")
+st.write("created")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     # Display the chat history
 for chat in st.session_state.messages[:-1]:
