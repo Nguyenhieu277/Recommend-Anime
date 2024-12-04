@@ -1,13 +1,21 @@
 import requests
+
 class AniList:
     def __init__(self):  # Connect with AniList API
         self.api_url = "https://graphql.anilist.co"
 
-    def recommend_anime(self, genres=None, min_score = None):  # Recommend anime based on genres and score
+    def recommend_anime(self, tags, genres, min_score):  # Recommend anime based on genres and score
+        # Default genres and tags in case both are empty
+        if not genres:
+            genres = ["Action", "Adventure", "Comedy", "Romance"]
+        if not tags:
+            tags = ["Magic", "Isekai"]
+
+        # GraphQL query
         query = """
-            query($genres: [String], $minScore: Int) {
+            query($genres: [String], $tags: [String], $minScore: Int) {
                 Page(perPage: 5) {
-                    media(genre_in: $genres, type: ANIME, averageScore_greater: $minScore, sort: SCORE_DESC) {
+                    media(tag_in: $tags, genre_in: $genres, type: ANIME, averageScore_greater: $minScore, sort: SCORE_DESC) {
                         title {
                             romaji
                             english
@@ -20,11 +28,8 @@ class AniList:
                 }
             }
         """
-
-        # If no genres are provided, use a default set (e.g., "Action", "Adventure")
-        genres = genres or ["Action", "Adventure", "Comedy", "Romance"]
-
-        variables = {"genres": list(genres), "minScore": min_score}
+        
+        variables = {"genres": genres, "tags": tags, "minScore": min_score}
         response = requests.post(self.api_url, json={"query": query, "variables": variables})
         
         if response.status_code == 200:
@@ -32,41 +37,42 @@ class AniList:
             media_list = data.get("data", {}).get("Page", {}).get("media", [])
             return self._process_anime_data(media_list)
         else:
+            print(f"Error: {response.status_code} - {response.text}")
             return []
 
     def _process_anime_data(self, media_list):  # Process anime data
         results = []
         for media in media_list:
-            if len(results) == 2: break
+            if len(results) == 2:  # Limit to 2 recommendations
+                break
             results.append({
-                    "id": media.get("id"),
-                    "title_romaji": media.get("title", {}).get("romaji"),
-                    "title_english": media.get("title", {}).get("english"),
-                    "description": media.get("description"),
-                    "genres": media.get("genres"),
-                    "averageScore": media.get("averageScore"),
-                    "episodes": media.get("episodes")
+                "id": media.get("id"),
+                "title_romaji": media.get("title", {}).get("romaji"),
+                "title_english": media.get("title", {}).get("english"),
+                "description": media.get("description"),
+                "genres": media.get("genres"),
+                "averageScore": media.get("averageScore"),
+                "episodes": media.get("episodes")
             })
         return results
 
 
+# Example of usage
 # if __name__ == "__main__":
 #     # Create an instance of AniList
 #     anilist = AniList()
 
 #     # Example of user preferences
-#     genres = ["Magic"]  # Example genres
-#     min_score = 0  # Example minimum score filter
+#     genres = ["Romance"]  # Example genres
+#     tags = ["Zombie"]  # No tags provided
+#     min_score = 80  # Example minimum score filter
 
 #     # Recommend anime based on the provided preferences
-#     result = anilist.recommend_anime(genres, min_score)
+#     result = anilist.recommend_anime(tags, genres, min_score)
 
 #     # Print the result
-#     if "error" in result:
-#         print(result["error"])
-#     elif "message" in result:
-#         print(result["message"])
-#         print(result["suggestions"])
+#     if not result:
+#         print("No recommendations found.")
 #     else:
 #         print("AniList Recommendations:")
 #         for anime in result:

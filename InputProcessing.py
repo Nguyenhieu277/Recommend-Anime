@@ -10,18 +10,12 @@ class InputProcessor:
         
         self.stop_words = set(stopwords.words("english"))
         self.genres_list = [
-            "action", "adventure", "comedy", "drama", "fantasy", "horror", "romance", 
-            "sci-fi", "slice of life", "sports", "supernatural", "game", "gourmet", 
-            "music", "mecha", "psychological", "mystery", "thriller", "historical", 
-            "military", "martial arts", "ecchi", "harem", "reverse harem", "shoujo", 
-            "shounen", "seinen", "josei", "cyberpunk", "post-apocalyptic", "magic", 
-            "parody", "school", "survival", "tragedy", "demons", "kids", 
-            "romantic comedy", "superpower", "dark fantasy", "isekai", "crime", 
-            "idols", "vampire", "zombie", "steampunk", "detective", "medical", 
-            "battle royale", "space", "time travel", "dystopian", "anthropomorphic", 
-            "mythology", "yaoi", "yuri", "otokonoko", "alchemy", "political", 
-            "family", "nature", "healing", "reverse isekai"
+            "action", "adventure", "comedy", "drama", "ecchi", "fantasy", 
+            "horror", "mahou shoujo", "mecha", "music", "mystery", 
+            "psychological", "romance", "sci-fi", "slice of life", 
+            "sports", "supernatural", "thriller"
         ]
+
  
         self.hobby_map = {
             "sports": ["sports", "action", "adventure"],
@@ -48,8 +42,42 @@ class InputProcessor:
             "fashion": ["romance", "slice of life", "comedy"],
             "gardening": ["nature", "healing", "slice of life"],
             "astronomy": ["sci-fi", "space", "fantasy"],
-            "martial arts": ["martial arts", "action", "sports", "mecha"]
+            "martial arts": ["martial arts", "action", "sports", "mecha"],
+            "magical": ["fantasy", "advanture", "shoujo"]
         }
+        self.tags = [
+            "4-koma", "achronological order", "afterlife", "age gap", "airsoft", "aliens", 
+            "alternate universe", "american football", "amnesia", "anti-hero", "archery", 
+            "assassins", "athletics", "augmented reality", "aviation", "badminton", "band", 
+            "bar", "baseball", "basketball", "battle royale", "biographical", "bisexual", 
+            "body swapping", "boxing", "bullying", "calligraphy", "card battle", "cars", 
+            "cgi", "chibi", "chuunibyou", "classic literature", "college", "coming of age", 
+            "cosplay", "crossdressing", "crossover", "cultivation", "cute girls doing cute things", 
+            "cyberpunk", "cycling", "dancing", "delinquents", "demons", "development", 
+            "dragons", "drawing", "dystopian", "economics", "educational", "ensemble cast", 
+            "environmental", "episodic", "espionage", "fairy tale", "family life", "fashion", 
+            "female protagonist", "fishing", "fitness", "flash", "food", "football", "foreign", 
+            "fugitive", "full cgi", "full colour", "gambling", "gangs", "gender bending", 
+            "gender neutral", "ghost", "gods", "gore", "guns", "gyaru", "harem", "henshin", 
+            "hikikomori", "historical", "ice skating", "idol", "isekai", "iyashikei", "josei", 
+            "kaiju", "karuta", "kemonomimi", "kids", "love triangle", "mafia", "magic", 
+            "mahjong", "maids", "male protagonist", "martial arts", "memory manipulation", 
+            "meta", "military", "monster girl", "mopeds", "motorcycles", "musical", 
+            "mythology", "nekomimi", "ninja", "no dialogue", "noir", "nudity", "otaku culture", 
+            "outdoor", "parody", "philosophy", "photography", "pirates", "poker", "police", 
+            "politics", "post-apocalyptic", "primarily adult cast", "primarily female cast", 
+            "primarily male cast", "puppetry", "real robot", "rehabilitation", "reincarnation", 
+            "revenge", "reverse harem", "robots", "rugby", "rural", "samurai", "satire", 
+            "school", "school club", "seinen", "ships", "shogi", "shoujo", "shoujo ai", 
+            "shounen", "shounen ai", "slapstick", "slavery", "space", "space opera", 
+            "steampunk", "stop motion", "super power", "super robot", "superhero", 
+            "surreal comedy", "survival", "swimming", "swordplay", "table tennis", "tanks", 
+            "teacher", "tennis", "terrorism", "time manipulation", "time skip", "tragedy", 
+            "trains", "triads", "tsundere", "urban fantasy", "vampire", "video games", 
+            "virtual world", "volleyball", "war", "witch", "work", "wrestling", "writing", 
+            "wuxia", "yakuza", "yandere", "youkai", "zombie", "misc"
+        ]
+
         self.stemmer = PorterStemmer()
 
     def process_input(self, user_input):
@@ -62,11 +90,13 @@ class InputProcessor:
 
         hobbies = [word for word in words if word in self.hobby_map]
 
+        tags = [word for word in words if word in self.tags]
         for hobby in hobbies:
             genres.extend(self.hobby_map[hobby])
 
         genres = list(dict.fromkeys(genres))
-        min_score = 50
+        tags = list(dict.fromkeys(tags))
+        min_score = 70
         words_with_numbers = word_tokenize(user_input.lower())
         for i, word in enumerate(words_with_numbers):
             if word.isdigit():
@@ -82,6 +112,7 @@ class InputProcessor:
 
         return {
             "genres" : genres,
+            "tags" : tags,
             "min_score" : min_score
         }
 
