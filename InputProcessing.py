@@ -119,7 +119,7 @@ class InputProcessor:
 # if __name__ == '__main__':
 #     processor = InputProcessor()
 #     test_cases = [
-#         "I love watching zombie anime",
+#         "romance and zombie anime",
 #         "Can you recommend some romance or drama anime? Minimum score: 90.",
 #         "Looking for sci-fi and supernatural anime, maybe something above 75.",
 #         "I'm into sports and adventure shows. Surprise me!",
