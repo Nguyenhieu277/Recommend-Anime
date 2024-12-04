@@ -1,10 +1,41 @@
 import streamlit as st
 from InputProcessing import InputProcessor
 from anime_list import AniList
-from openAI import OpenAIClient
 import time
 import random
+import os
+from dotenv import load_dotenv
+from openai import OpenAI, OpenAIError
 
+class OpenAIClient:
+    def __init__(self):
+        load_dotenv()
+        self.token = os.getenv("GITHUB_TOKEN")
+        self.endpoint = "https://models.inference.ai.azure.com"
+        self.model_name = "gpt-4o-mini"
+        try:
+            self.client = OpenAI(
+                base_url=self.endpoint,
+                api_key=self.token,
+            )
+        except OpenAIError as e:
+            print(f"Failed to initialize OpenAI client: {e}")
+            self.client = None
+
+    def get_response(self, messages, temperature=1.0, top_p=1.0, max_tokens=1000):
+        if not self.client:
+            return "OpenAI client is not initialized."
+        try:
+            response = self.client.chat.completions.create(
+                messages=messages,
+                temperature=temperature,
+                top_p=top_p,
+                max_tokens=max_tokens,
+                model=self.model_name
+            )
+            return response.choices[0].message.content
+        except OpenAIError as e:
+            return f"Failed to get response from OpenAI: {e}"
 processor = InputProcessor()
 client = OpenAIClient()
 ListAnime = AniList()
@@ -36,7 +67,7 @@ greeting_responses = {
 }
 
 def isRelatedAnime(query):
-    keywords = ["recommend","suggest","good","best","popular","top","watch","series","movie","anime","genre","list","favorites"]
+    keywords = ["like","love","recommend","suggest","good","best","popular","top","watch","series","movie","anime","genre","list","favorites"]
     return any(keyword in query.lower() for keyword in keywords)
 def isGreetings(query):
     greetings = [
@@ -94,7 +125,7 @@ def handle_input():
         st.session_state.messages.append({"user": user_input, "assistant": response})
         st.session_state.input_text = ""
     else: 
-        response = "I can't answer that question."
+        response = client.get_response([{"role": "user", "content": user_input}])
         st.session_state.messages.append({"user": user_input, "assistant": response})
         st.session_state.input_text = ""
 
