@@ -7,10 +7,10 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI, OpenAIError
 
+load_dotenv()
 api_key = st.secrets["GITHUB_TOKEN"]
 class OpenAIClient:
     def __init__(self):
-        load_dotenv()
         self.token = api_key
         self.endpoint = "https://models.inference.ai.azure.com"
         self.model_name = "gpt-4o-mini"
