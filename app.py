@@ -125,7 +125,16 @@ def handle_input():
         st.session_state.messages.append({"user": user_input, "assistant": response})
         st.session_state.input_text = ""
     else: 
-        response = client.get_response([{"role": "user", "content": user_input}])
+        response = client.get_response([
+        {
+            "role": "system",
+            "content": "You are a helpful assistant",
+        },
+        {
+            "role": "user",
+            "content": user_input,
+        }
+    ])
         st.session_state.messages.append({"user": user_input, "assistant": response})
         st.session_state.input_text = ""
 
