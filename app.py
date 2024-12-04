@@ -22,15 +22,12 @@ class OpenAIClient:
             print(f"Failed to initialize OpenAI client: {e}")
             self.client = None
 
-    def get_response(self, messages, temperature=1.0, top_p=1.0, max_tokens=1000):
+    def get_response(self, messages):
         if not self.client:
             return "OpenAI client is not initialized."
         try:
             response = self.client.chat.completions.create(
                 messages=messages,
-                temperature=temperature,
-                top_p=top_p,
-                max_tokens=max_tokens,
                 model=self.model_name
             )
             return response.choices[0].message.content
