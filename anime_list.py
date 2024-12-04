@@ -58,29 +58,29 @@ class AniList:
 
 
 #Example of usage
-if __name__ == "__main__":
-    # Create an instance of AniList
-    anilist = AniList()
+# if __name__ == "__main__":
+#     # Create an instance of AniList
+#     anilist = AniList()
 
-    # Example of user preferences
-    genres = ["Romance"]  # Example genres
-    tags = ["Zombie"]  # No tags provided
-    min_score = 80  # Example minimum score filter
+#     # Example of user preferences
+#     genres = ["Romance"]  # Example genres
+#     tags = ["Zombie"]  # No tags provided
+#     min_score = 80  # Example minimum score filter
 
-    # Recommend anime based on the provided preferences
-    result = anilist.recommend_anime(tags, genres, min_score)
+#     # Recommend anime based on the provided preferences
+#     result = anilist.recommend_anime(tags, genres, min_score)
 
-    # Print the result
-    if not result:
-        print("No recommendations found.")
-    else:
-        print("AniList Recommendations:")
-        for anime in result:
-            print(f"Anime ID: {anime['id']}")
-            print(f"Romaji Title: {anime['title_romaji']}")
-            print(f"English Title: {anime['title_english']}")
-            print(f"Description: {anime['description']}")
-            print(f"Genres: {', '.join(anime['genres'])}")
-            print(f"Average Score: {anime['averageScore']}")
-            print(f"Episodes: {anime['episodes']}")
-            print()
+#     # Print the result
+#     if not result:
+#         print("No recommendations found.")
+#     else:
+#         print("AniList Recommendations:")
+#         for anime in result:
+#             print(f"Anime ID: {anime['id']}")
+#             print(f"Romaji Title: {anime['title_romaji']}")
+#             print(f"English Title: {anime['title_english']}")
+#             print(f"Description: {anime['description']}")
+#             print(f"Genres: {', '.join(anime['genres'])}")
+#             print(f"Average Score: {anime['averageScore']}")
+#             print(f"Episodes: {anime['episodes']}")
+#             print()
