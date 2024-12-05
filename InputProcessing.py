@@ -127,10 +127,14 @@ class InputProcessor:
 #         "I enjoy cooking and gaming. Recommend something fun!",
 #         "I'm a fan of music and dancing. Any suggestions?"
 #     ]
-
+    
 #     for idx, input_text in enumerate(test_cases):
 #         print(f"Test Case {idx + 1}:")
 #         print(f"Input: {input_text}")
-#         result = processor.process_input(input_text)
-#         print("Processed Result:", result)
-#         print("-" * 40)
+#         processed = processor.process_input(input_text)
+#         genres = set(processed["genres"])
+#         tags = set(processed["tags"])
+#         min_score = processed["min_score"]
+#         print(genres)
+#         print(tags)
+#         print(min_score)

@@ -1,5 +1,5 @@
 import requests
-
+from InputProcessing import InputProcessor
 class AniList:
     def __init__(self):  # Connect with AniList API
         self.api_url = "https://graphql.anilist.co"
@@ -58,29 +58,28 @@ class AniList:
 
 
 #Example of usage
-if __name__ == "__main__":
-    # Create an instance of AniList
-    anilist = AniList()
+# if __name__ == "__main__":
+#     processor = InputProcessor()
+#     prompt = "Romance and zombie anime"
+#     processed = processor.process_input(prompt)
+#     genres = set(processed["genres"])
+#     tags = set(processed["tags"])
+#     min_score = processed["min_score"]
 
-    # Example of user preferences
-    genres = ["Romance"]  # Example genres
-    tags = ["Zombie"]  # No tags provided
-    min_score = 70  # Example minimum score filter
+#     ani = AniList()
+#     recommend = ani.recommend_anime(tags, genres, min_score)
 
-    # Recommend anime based on the provided preferences
-    result = anilist.recommend_anime(tags, genres, min_score)
-
-    # Print the result
-    if not result:
-        print("No recommendations found.")
-    else:
-        print("AniList Recommendations:")
-        for anime in result:
-            print(f"Anime ID: {anime['id']}")
-            print(f"Romaji Title: {anime['title_romaji']}")
-            print(f"English Title: {anime['title_english']}")
-            print(f"Description: {anime['description']}")
-            print(f"Genres: {', '.join(anime['genres'])}")
-            print(f"Average Score: {anime['averageScore']}")
-            print(f"Episodes: {anime['episodes']}")
-            print()
+#     bot_response = "".join(
+#             f"<div>"
+#             f"<h2>Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}</h2>"
+#             f"<p><strong>Description:</strong> {anime.get('description', 'No description available')}</p>"
+#             f"<p><strong>Genres:</strong> {', '.join(anime.get('genres', []))}</p>"
+#             f"<p><strong>Average Score:</strong> {anime.get('averageScore', 'N/A')}</p>"
+#             f"<p><strong>Episodes:</strong> {anime.get('episodes', 'N/A')}</p>"
+#             f"</div><br>"
+#             if isinstance(anime, dict)
+#             else "<p>Don't have anime based on your description</p>"
+#             for anime in recommend
+#         )
+#     print(bot_response)
+    
