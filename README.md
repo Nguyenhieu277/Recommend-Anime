@@ -38,8 +38,8 @@ Run the app with streamlit:
 ```bash
 streamlit run app.py
 ```
-Input a query in natural language to get anime recommendations.
-You can also try in here https://mini-project-27072005.streamlit.app/#ea704c50
+- Input a query in natural language to get anime recommendations.
+- You can also try in here [https://nguyenhieu-project.streamlit.app/]
 ## Contributing
 Contributions are welcome! To contribute:
 
