@@ -92,9 +92,8 @@ def generate_response(prompt):
        
     if not recommendations:
         return 0
-    else:
     # Safeguard and generate response
-        bot_response = "".join(
+    bot_response = "".join(
             f"<div>"
             f"<h2>Title: {anime.get('title_english', anime.get('title_romaji', 'N/A'))}</h2>"
             f"<p><strong>Description:</strong> {anime.get('description', 'No description available')}</p>"
@@ -105,7 +104,7 @@ def generate_response(prompt):
             if isinstance(anime, dict)
             else "<p>Don't have anime based on your description</p>"
             for anime in recommendations
-        )
+    )
     
     return bot_response
 
@@ -125,8 +124,8 @@ def handle_input():
                         "content": user_input,
                     }
                 ])
-            st.session_state.messages.append({"user" : user_input, "assistant" : response})
-            st.session_state.input_text = ""
+        st.session_state.messages.append({"user" : user_input, "assistant" : response})
+        st.session_state.input_text = ""
         
 
     elif isGreetings(user_input):
