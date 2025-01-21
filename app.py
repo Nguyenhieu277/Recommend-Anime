@@ -13,7 +13,7 @@ class OpenAIClient:
     def __init__(self):
         self.token = api_key
         self.endpoint = "https://models.inference.ai.azure.com"
-        self.model_name = "gpt-4o-mini"
+        self.model_name = "gpt-4o"
         try:
             self.client = OpenAI(
                 base_url=self.endpoint,
