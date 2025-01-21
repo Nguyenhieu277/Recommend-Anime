@@ -1,6 +1,6 @@
 import streamlit as st
-from src.InputProcessing import InputProcessor
-from src.anime_list import AniList
+from InputProcessing import InputProcessor
+from anime_list import AniList
 import time
 import random
 import os
