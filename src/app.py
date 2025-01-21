@@ -1,6 +1,6 @@
 import streamlit as st
-from InputProcessing import InputProcessor
-from anime_list import AniList
+from src.InputProcessing import InputProcessor
+from src.anime_list import AniList
 import time
 import random
 import os
@@ -42,7 +42,7 @@ class OpenAIClient:
 processor = InputProcessor()
 client = OpenAIClient()
 ListAnime = AniList()
-greeting_responses = {
+greeting_responses = {  
     "hello": ["Hello! How can I assist you today?", "Hi there! How can I help you?", "Hello! What can I do for you today?"],
     "hi": ["Hi! How's it going?", "Hey! How can I assist you?", "Hello! What's up?"],
     "hey": ["Hey there! How can I help?", "Hi! What's on your mind?", "Hey! Need help with something?"],
@@ -115,6 +115,10 @@ def handle_input():
             response = generate_response(user_input)
             if response == 0:
                 response = client.get_response([
+                    { 
+                        "role" : "system", 
+                        "content" : "You are a helpful assistant." 
+                     },
                     {
                         "role": "system",
                         "content": "You are a helpful assistant to recommend some good anime",
@@ -153,7 +157,6 @@ def handle_input():
         st.session_state.input_text = ""
 
 st.title("💬 Anime Recommender")
-st.write("created by HiuDev")
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     # Display the chat history
 for chat in st.session_state.messages[:-1]:
