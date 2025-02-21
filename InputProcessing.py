@@ -2,6 +2,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
+
 nltk.download('punkt_tab')
 nltk.download('stopwords')
 
@@ -9,6 +10,7 @@ class InputProcessor:
     def __init__(self):
         
         self.stop_words = set(stopwords.words("english"))
+
         self.genres_list = [
             "action", "adventure", "comedy", "drama", "ecchi", "fantasy", 
             "horror", "mahou shoujo", "mecha", "music", "mystery", 
@@ -45,6 +47,7 @@ class InputProcessor:
             "martial arts": ["martial arts", "action", "sports", "mecha"],
             "magical": ["fantasy", "advanture", "shoujo"]
         }
+
         self.tags = [
             "4-koma", "achronological order", "afterlife", "age gap", "airsoft", "aliens", 
             "alternate universe", "american football", "amnesia", "anti-hero", "archery", 
@@ -83,6 +86,7 @@ class InputProcessor:
     def process_input(self, user_input):
 
         words = word_tokenize(user_input.lower())
+
         filtered_words = [word for word in words if word.isalpha() and word not in self.stop_words]
 
     
@@ -91,6 +95,7 @@ class InputProcessor:
         hobbies = [word for word in words if word in self.hobby_map]
 
         tags = [word for word in words if word in self.tags]
+        
         for hobby in hobbies:
             genres.extend(self.hobby_map[hobby])
 

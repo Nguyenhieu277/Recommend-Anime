@@ -35,6 +35,7 @@ class OpenAIClient:
                 model=self.model_name
             )
             html_response = f"<p>{response.choices[0].message.content}</p>"
+            
             return html_response
         except OpenAIError as e:
             return f"Failed to get response from OpenAI: {e}"
