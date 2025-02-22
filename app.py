@@ -81,7 +81,8 @@ def isGreetings(query):
         "good day", "bonjour", "hola", "g'day", "how do you do", "nice to meet you"
     ]
     return any(keyword in query.lower() for keyword in greetings)
-
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 def generate_response(prompt):
     processed = processor.process_input(prompt)
     genres = set(processed["genres"])
